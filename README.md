@@ -1,4 +1,4 @@
-# Tienda — implementación del caso de estudio
+# Tienda — implementación del caso de estudio.
 
 Aplicación web (backend + frontend) que implementa el caso de estudio de la tienda
 discutido en el OVA de principios de diseño de software, siguiendo el modelo de
