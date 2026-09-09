@@ -157,7 +157,6 @@ def reiniciar():
     return {"mensaje": "Tienda reiniciada"}
 
 
-# --- Frontend estatico ----------------------------------------------------
 app.mount("/static", StaticFiles(directory=FRONTEND), name="static")
 
 
