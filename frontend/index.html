@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda — Caso de estudio</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="barra">
+    <div class="barra-titulo">
+      <h1>Tienda</h1>
+      <span class="subtitulo">Caso de estudio — principios de diseño de software</span>
+    </div>
+    <div class="barra-acciones">
+      <label class="usuario">
+        Usuario
+        <input id="usuario" value="demo" autocomplete="off">
+      </label>
+      <div class="ventas">
+        <span class="ventas-etiqueta">Total ventas</span>
+        <strong id="total-ventas">$0</strong>
+      </div>
+      <button id="btn-reiniciar" class="btn btn-plano" type="button">Reiniciar</button>
+    </div>
+  </header>
+
+  <main class="contenido">
+    <section class="panel">
+      <h2>Productos</h2>
+      <p class="ayuda">
+        El tipo de producto se deduce del SKU:
+        <span class="etiqueta t-normal">EA · normal</span>
+        <span class="etiqueta t-peso">WE · por peso (cantidad en kg)</span>
+        <span class="etiqueta t-especial">SP · descuento especial</span>
+      </p>
+      <div id="productos" class="rejilla"></div>
+    </section>
+
+    <aside class="panel carrito">
+      <h2>Carrito</h2>
+      <div id="items"></div>
+      <div class="total-carrito">
+        <span>Total de la compra</span>
+        <strong id="total-carrito">$0</strong>
+      </div>
+      <button id="btn-comprar" class="btn btn-principal" type="button" disabled>
+        Finalizar compra
+      </button>
+    </aside>
+  </main>
+
+  <div id="aviso" class="aviso" role="status" aria-live="polite" hidden></div>
+
+  <script src="/static/ilustraciones.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
