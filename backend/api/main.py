@@ -158,6 +158,21 @@ def reiniciar():
 
 
 # --- Frontend estatico ----------------------------------------------------
+@app.middleware("http")
+async def revalidar_estaticos(request, call_next):
+    """Obliga al navegador a revalidar el frontend en cada carga.
+
+    StaticFiles solo envia etag y last-modified. Sin Cache-Control el navegador
+    aplica cache heuristica y puede seguir usando un archivo viejo despues de
+    editarlo. Con no-cache sigue usando el etag, asi que la revalidacion cuesta
+    un 304 y nunca se sirve una version obsoleta durante el desarrollo.
+    """
+    respuesta = await call_next(request)
+    if request.url.path == "/" or request.url.path.startswith("/static"):
+        respuesta.headers["Cache-Control"] = "no-cache"
+    return respuesta
+
+
 app.mount("/static", StaticFiles(directory=FRONTEND), name="static")
 
 
