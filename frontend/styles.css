@@ -1,0 +1,432 @@
+:root {
+  --fondo: #f1f3f9;
+  --superficie: #ffffff;
+  --borde: #e4e7ef;
+  --texto: #17191f;
+  --texto-suave: #6b7280;
+  --acento: #4f46e5;
+  --acento-oscuro: #4338ca;
+  --exito: #0f9d58;
+  --error: #dc2626;
+
+  /* Un color propio por tipo de SKU: tinte suave, trazo y texto. */
+  --normal: #2563eb;
+  --normal-suave: #eaf1ff;
+  --normal-tinte: linear-gradient(140deg, #eaf1ff, #d6e4ff);
+  --peso: #b45309;
+  --peso-suave: #fff6e5;
+  --peso-tinte: linear-gradient(140deg, #fff6e5, #ffe9c2);
+  --especial: #7c3aed;
+  --especial-suave: #f3efff;
+  --especial-tinte: linear-gradient(140deg, #f3efff, #e6dcff);
+  --otro-tinte: linear-gradient(140deg, #eef1f5, #e0e5ec);
+
+  --radio: 14px;
+  --radio-chico: 10px;
+  --sombra: 0 1px 2px rgba(20, 24, 40, .05), 0 6px 18px rgba(20, 24, 40, .05);
+  --sombra-alta: 0 10px 20px rgba(20, 24, 40, .09), 0 22px 44px rgba(20, 24, 40, .12);
+  --curva: cubic-bezier(.2, .8, .25, 1);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--texto);
+  font-size: 15px;
+  background:
+    radial-gradient(900px 500px at 8% -6%, #e8e6ff 0%, transparent 60%),
+    radial-gradient(800px 460px at 96% 0%, #ffe8f3 0%, transparent 55%),
+    var(--fondo);
+  background-attachment: fixed;
+}
+
+/* --- Barra superior --------------------------------------------------- */
+.barra {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 30px;
+  color: #fff;
+  background: linear-gradient(115deg, #4f46e5 0%, #7c3aed 42%, #db2777 100%);
+  background-size: 200% 100%;
+  animation: desplazar-fondo 22s ease-in-out infinite;
+  box-shadow: 0 10px 30px rgba(79, 70, 229, .22);
+  position: relative;
+  z-index: 5;
+}
+@keyframes desplazar-fondo {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+.barra h1 {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: -.4px;
+}
+.subtitulo { color: rgba(255, 255, 255, .78); font-size: 13px; }
+.barra-acciones { display: flex; align-items: center; gap: 22px; }
+
+.usuario {
+  display: flex; flex-direction: column; gap: 4px;
+  font-size: 12px; color: rgba(255, 255, 255, .78);
+}
+.usuario input {
+  font-size: 14px; padding: 7px 11px; width: 132px;
+  color: #fff; font-family: inherit;
+  background: rgba(255, 255, 255, .16);
+  border: 1px solid rgba(255, 255, 255, .3);
+  border-radius: var(--radio-chico);
+  transition: background .2s, border-color .2s;
+}
+.usuario input:focus {
+  outline: none;
+  background: rgba(255, 255, 255, .26);
+  border-color: rgba(255, 255, 255, .7);
+}
+
+.ventas { text-align: right; }
+.ventas-etiqueta { display: block; font-size: 12px; color: rgba(255, 255, 255, .78); }
+.ventas strong {
+  font-size: 20px;
+  display: inline-block;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Estructura ------------------------------------------------------- */
+.contenido {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 22px;
+  padding: 26px 30px 60px;
+  align-items: start;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+@media (max-width: 960px) { .contenido { grid-template-columns: 1fr; } }
+
+.panel {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 22px;
+  box-shadow: var(--sombra);
+}
+.panel h2 { margin: 0 0 12px; font-size: 18px; letter-spacing: -.2px; }
+.ayuda { color: var(--texto-suave); font-size: 13px; margin: 0 0 20px; line-height: 2.1; }
+.carrito { position: sticky; top: 24px; }
+
+/* --- Etiquetas de tipo de SKU ----------------------------------------- */
+.etiqueta {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+  letter-spacing: .3px;
+}
+.t-normal   { background: var(--normal-suave);   color: var(--normal); }
+.t-peso     { background: var(--peso-suave);     color: var(--peso); }
+.t-especial { background: var(--especial-suave); color: var(--especial); }
+.t-otro     { background: #eceff3;               color: var(--texto-suave); }
+
+/* --- Tarjetas de producto --------------------------------------------- */
+.rejilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(268px, 1fr));
+  gap: 20px;
+}
+
+.tarjeta {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  transition: transform .28s var(--curva), box-shadow .28s var(--curva),
+              border-color .28s var(--curva);
+  animation: entrar-tarjeta .55s var(--curva) both;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
+@keyframes entrar-tarjeta {
+  from { opacity: 0; transform: translateY(18px) scale(.97); }
+  to   { opacity: 1; transform: none; }
+}
+.tarjeta:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--sombra-alta);
+  border-color: #d6dae6;
+}
+
+/* Franja de color superior segun el tipo de producto. */
+.tarjeta::before {
+  content: "";
+  position: absolute; inset: 0 0 auto; height: 4px;
+  background: var(--franja, var(--texto-suave));
+  z-index: 2;
+}
+.tarjeta.tipo-normal   { --franja: linear-gradient(90deg, #3b82f6, #60a5fa); }
+.tarjeta.tipo-peso     { --franja: linear-gradient(90deg, #d97706, #fbbf24); }
+.tarjeta.tipo-especial { --franja: linear-gradient(90deg, #7c3aed, #c084fc); }
+.tarjeta.tipo-otro     { --franja: linear-gradient(90deg, #94a3b8, #cbd5e1); }
+
+.tarjeta-figura {
+  position: relative;
+  height: 172px;
+  display: grid;
+  place-items: center;
+  background: var(--tinte, var(--otro-tinte));
+  overflow: hidden;
+}
+.tarjeta.tipo-normal   .tarjeta-figura { --tinte: var(--normal-tinte); }
+.tarjeta.tipo-peso     .tarjeta-figura { --tinte: var(--peso-tinte); }
+.tarjeta.tipo-especial .tarjeta-figura { --tinte: var(--especial-tinte); }
+
+/* Halo que gira despacio detras de la ilustracion. */
+.tarjeta-figura::after {
+  content: "";
+  position: absolute;
+  width: 210px; height: 210px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, .85) 0%, transparent 62%);
+  animation: flotar-halo 9s ease-in-out infinite;
+}
+@keyframes flotar-halo {
+  0%, 100% { transform: translate(-14px, 8px) scale(1); }
+  50%      { transform: translate(14px, -8px) scale(1.08); }
+}
+
+.ilustracion {
+  position: relative;
+  width: 78%;
+  max-height: 132px;
+  filter: drop-shadow(0 8px 14px rgba(23, 25, 31, .16));
+  transition: transform .35s var(--curva);
+}
+.tarjeta:hover .ilustracion { transform: scale(1.07) rotate(-1.5deg); }
+
+/* Tarjetas con fotografia: la imagen ocupa toda la figura, sin tinte ni halo. */
+.tarjeta-figura.con-foto { background: #e9edf3; }
+.tarjeta-figura.con-foto::after {
+  inset: 0;
+  width: auto; height: auto;
+  border-radius: 0;
+  animation: none;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 18, 30, .30) 0%,
+    rgba(15, 18, 30, .04) 34%,
+    transparent 60%
+  );
+}
+.foto {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .55s var(--curva);
+}
+.tarjeta:hover .foto { transform: scale(1.07); }
+.tarjeta.sin-stock .foto { filter: grayscale(1) opacity(.55); }
+
+.etiqueta-figura {
+  position: absolute; top: 14px; right: 14px; z-index: 2;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(23, 25, 31, .18);
+}
+
+.tarjeta-cuerpo {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 18px; flex: 1;
+}
+.sku {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11.5px; font-weight: 600; letter-spacing: .6px;
+  color: var(--texto-suave);
+}
+.nombre { font-weight: 650; font-size: 16.5px; letter-spacing: -.2px; }
+.descripcion { font-size: 13px; color: var(--texto-suave); min-height: 36px; line-height: 1.5; }
+
+.tarjeta-pie {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 10px; margin-top: 4px;
+  padding-top: 12px; border-top: 1px dashed var(--borde);
+}
+.precio { font-size: 20px; font-weight: 700; letter-spacing: -.5px; }
+.precio small { font-weight: 500; font-size: 11.5px; color: var(--texto-suave); display: block; }
+.existencias { font-size: 12px; color: var(--texto-suave); text-align: right; }
+.agotado { color: var(--error); font-weight: 700; }
+
+/* Producto sin unidades: la tarjeta se apaga, no desaparece. */
+.tarjeta.sin-stock .ilustracion { filter: grayscale(1) opacity(.55); }
+.tarjeta.sin-stock .tarjeta-figura { background: #f1f3f7; }
+.tarjeta.sin-stock:hover { transform: none; box-shadow: var(--sombra); }
+
+.fila-agregar { display: flex; gap: 9px; margin-top: auto; padding-top: 12px; }
+.fila-agregar input {
+  width: 82px; padding: 9px 11px; font-family: inherit; font-size: 14px;
+  border: 1px solid var(--borde); border-radius: var(--radio-chico);
+  transition: border-color .2s, box-shadow .2s;
+}
+.fila-agregar input:focus {
+  outline: none; border-color: var(--acento);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, .16);
+}
+.fila-agregar .btn { flex: 1; }
+
+/* Confirmacion al agregar al carrito: cubre la figura con un chulo.
+   Solo se anima la opacidad y el trazo del SVG; no se toca el transform de la
+   tarjeta, que obligaba al navegador a redibujar la fotografia. */
+.confirmacion {
+  position: absolute; inset: 0; z-index: 3;
+  display: grid; place-items: center;
+  background: linear-gradient(150deg, rgba(13, 148, 88, .94), rgba(16, 185, 129, .94));
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.tarjeta.agregado { box-shadow: 0 0 0 3px rgba(16, 185, 129, .5), var(--sombra-alta); }
+.tarjeta.agregado .confirmacion { animation: mostrar-chulo 1.25s var(--curva) forwards; }
+@keyframes mostrar-chulo {
+  0%   { opacity: 0; visibility: visible; }
+  14%  { opacity: 1; }
+  74%  { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+.chulo { width: 86px; height: 86px; }
+.chulo circle {
+  fill: none; stroke: rgba(255, 255, 255, .55); stroke-width: 2.5;
+  stroke-dasharray: 145; stroke-dashoffset: 145;
+}
+.chulo path {
+  fill: none; stroke: #fff; stroke-width: 5;
+  stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 40; stroke-dashoffset: 40;
+}
+.tarjeta.agregado .chulo circle { animation: trazar .5s var(--curva) .05s forwards; }
+.tarjeta.agregado .chulo path   { animation: trazar .4s var(--curva) .22s forwards; }
+@keyframes trazar { to { stroke-dashoffset: 0; } }
+
+.confirmacion-texto {
+  position: absolute; bottom: 16px;
+  color: #fff; font-weight: 700; font-size: 13px; letter-spacing: .3px;
+}
+
+/* --- Botones ---------------------------------------------------------- */
+.btn {
+  border: 1px solid transparent; border-radius: var(--radio-chico);
+  padding: 9px 15px; font-size: 14px; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+  transition: background .2s, color .2s, border-color .2s,
+              transform .12s var(--curva), box-shadow .2s;
+}
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn:not(:disabled):active { transform: scale(.97); }
+
+.btn-principal {
+  width: 100%; padding: 13px; font-size: 15px; color: #fff;
+  background: linear-gradient(120deg, var(--acento), #7c3aed);
+  background-size: 180% 100%;
+  box-shadow: 0 6px 16px rgba(79, 70, 229, .28);
+}
+.btn-principal:not(:disabled):hover {
+  background-position: 100% 0;
+  box-shadow: 0 10px 24px rgba(79, 70, 229, .36);
+  transform: translateY(-1px);
+}
+.btn-plano {
+  background: var(--superficie); border-color: var(--borde); color: var(--texto);
+}
+.btn-plano:not(:disabled):hover {
+  border-color: var(--acento); color: var(--acento);
+  background: #f5f4ff;
+}
+/* La barra superior es oscura: el boton plano se invierte ahi. */
+.barra .btn-plano {
+  background: rgba(255, 255, 255, .16); color: #fff;
+  border-color: rgba(255, 255, 255, .32);
+}
+.barra .btn-plano:hover {
+  background: rgba(255, 255, 255, .28); color: #fff;
+  border-color: rgba(255, 255, 255, .7);
+}
+.btn-icono {
+  background: transparent; border: none; color: #b6bcc9;
+  font-size: 20px; line-height: 1; padding: 2px 7px; cursor: pointer;
+  border-radius: 8px;
+  transition: color .18s, background .18s, transform .18s var(--curva);
+}
+.btn-icono:hover { color: var(--error); background: #fef1f1; transform: rotate(90deg); }
+
+/* --- Carrito ---------------------------------------------------------- */
+.item {
+  display: flex; justify-content: space-between; gap: 10px;
+  padding: 13px 0; border-bottom: 1px solid var(--borde);
+  animation: entrar-item .35s var(--curva) both;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+@keyframes entrar-item {
+  from { opacity: 0; transform: translateX(14px); }
+  to   { opacity: 1; transform: none; }
+}
+.item:first-child { padding-top: 0; }
+.item .nombre { font-size: 14.5px; }
+.item-detalle { font-size: 12px; color: var(--texto-suave); margin-top: 3px; }
+.item-acciones { display: flex; align-items: center; gap: 10px; }
+.item-total { font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.vacio {
+  color: var(--texto-suave); font-size: 14px;
+  padding: 30px 0; text-align: center; line-height: 1.7;
+}
+.vacio-icono { display: block; font-size: 30px; margin-bottom: 6px; opacity: .55; }
+
+.total-carrito {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: 16px 0; margin: 10px 0 4px;
+  border-top: 2px solid var(--texto);
+}
+.total-carrito strong {
+  font-size: 24px; letter-spacing: -.6px;
+  font-variant-numeric: tabular-nums;
+  display: inline-block;
+}
+
+/* Latido cuando un total cambia de valor. */
+.late { animation: latir .5s var(--curva); }
+@keyframes latir {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(1.14); color: var(--exito); }
+  100% { transform: scale(1); }
+}
+
+/* --- Aviso flotante --------------------------------------------------- */
+.aviso {
+  position: fixed; bottom: 26px; left: 50%;
+  padding: 13px 22px; border-radius: 12px; font-size: 14px; font-weight: 600;
+  color: #fff; background: #1f2330;
+  box-shadow: 0 10px 30px rgba(15, 18, 30, .28);
+  z-index: 20; max-width: 90vw;
+  animation: entrar-aviso .34s var(--curva);
+}
+@keyframes entrar-aviso {
+  from { opacity: 0; transform: translate(-50%, 18px) scale(.96); }
+  to   { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+.aviso:not([hidden]) { transform: translateX(-50%); }
+.aviso.error { background: linear-gradient(120deg, #dc2626, #ef4444); }
+.aviso.exito { background: linear-gradient(120deg, #0f9d58, #16b364); }
+
+/* --- Accesibilidad ---------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .tarjeta:hover { transform: none; }
+}
